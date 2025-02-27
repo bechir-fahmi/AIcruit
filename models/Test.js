@@ -11,7 +11,12 @@ const TestSchema = new mongoose.Schema({
             codeSnippet: { type: String, required: function() { return this.type === 'code'; } }
         }
     ],
-    createdAt: { type: Date, default: Date.now }
+    createdAt: { type: Date, default: Date.now },
+    difficulty: { type: String, enum: ['easy', 'medium', 'hard'], required: true },
+    technologies: [{ type: String, required: true }],
+    duration: { type: Number, required: true }, // en minutes
+    isAIGenerated: { type: Boolean, default: true },
+    status: { type: String, enum: ['draft', 'active', 'archived'], default: 'draft' }
 });
 
 module.exports = mongoose.model('Test', TestSchema);
