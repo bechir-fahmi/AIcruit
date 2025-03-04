@@ -18,3 +18,20 @@ exports.getCandidateTests = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+exports.getTestResults = async (req, res) => {
+    try {
+        const { linkId } = req.params;
+        
+        const candidateTest = await CandidateTest.findOne({ accessLink: linkId })
+            .populate('candidate test');
+            
+        if (!candidateTest) {
+            return res.status(404).json({ message: 'Résultats de test non trouvés' });
+        }
+        
+        res.json(candidateTest);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
